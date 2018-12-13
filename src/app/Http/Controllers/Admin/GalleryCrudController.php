@@ -3,11 +3,11 @@
 namespace SeanDowney\BackpackGalleryCrud\app\Http\Controllers\Admin;
 
 use Backpack\CRUD\app\Http\Controllers\CrudController;
+use SeanDowney\BackpackGalleryCrud\app\Http\Requests\GalleryRequest as StoreRequest;
+use SeanDowney\BackpackGalleryCrud\app\Http\Requests\GalleryRequest as UpdateRequest;
 use Storage;
 
 // VALIDATION: change the requests to match your own file names if you need form validation
-use SeanDowney\BackpackGalleryCrud\app\Http\Requests\GalleryRequest as StoreRequest;
-use SeanDowney\BackpackGalleryCrud\app\Http\Requests\GalleryRequest as UpdateRequest;
 
 class GalleryCrudController extends CrudController {
 
@@ -63,6 +63,15 @@ class GalleryCrudController extends CrudController {
             'disk' => config('seandowney.gallerycrud.disk'),
         ]);
 
+        if (isset($this->crud->getCurrentEntry()->slug)) {
+            $this->crud->addField([    // SELECT
+                                       'label'   => 'File manager',
+                                       'type'    => 'gallery_elfinder',
+                                       'name'    => 'gallery_elfinder',
+                                       'dirPath' => $this->crud->getCurrentEntry()->slug,
+            ], 'update');
+        }
+
         $this->crud->addField([    // SELECT
             'label' => 'Status',
             'type' => 'select_from_array',
@@ -75,10 +84,11 @@ class GalleryCrudController extends CrudController {
         // ------ CRUD COLUMNS
         $this->crud->addColumns(['title']); // add multiple columns, at the end of the stack
         $this->crud->addColumn([
-            'name' => 'status',
-            'label' => 'Status',
-            'type' => 'boolean',
+            'name'    => 'status',
+            'label'   => 'Status',
+            'type'    => 'boolean',
             'options' => [0 => 'Draft', 1 => 'Published'],
+            'default' => 0
         ]);
 
 

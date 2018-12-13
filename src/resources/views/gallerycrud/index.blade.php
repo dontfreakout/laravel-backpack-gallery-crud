@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.app')
 
 
 @section('content')
@@ -19,7 +19,8 @@
         @foreach ($galleries as $gallery)
         <article class="post">
             <header class="entry-header">
-                <h1 class="entry-title"><a href="{{ url('/gallery/'.$gallery->slug) }}" rel="bookmark">{{ $gallery->title }}</a></h1>
+                <h1 class="entry-title"><a href="{{ route('gallery.show', ["slug" => $gallery->slug]) }}"
+                                           rel="bookmark">{{ $gallery->title }}</a></h1>
             </header>
             <div class="entry-content">
                 <p>{{ strip_tags(str_limit($gallery->body, 300)) }}</p>

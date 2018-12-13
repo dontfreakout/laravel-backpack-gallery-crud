@@ -31,12 +31,12 @@ class GalleryRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
     public function rules()
     {
         return [
-            'title'            => 'required|min:5|max:255',
-            'slug'             => 'unique:galleries,slug,'.\Request::get('id'),
-            'body'             => 'min:5',
-            'captions.*'       => 'min:3',
-            'images.*'         => 'in:0,1',
-            'status'           => 'required|in:0,1',
+            'title'      => 'required|min:5|max:255',
+            'slug'       => 'unique:galleries,slug,' . \Request::get('id'),
+            'body'       => 'nullable|min:5',
+            'captions.*' => 'nullable|min:3',
+            'images.*'   => 'in:0,1',
+            'status'     => 'required|in:0,1',
         ];
     }
 

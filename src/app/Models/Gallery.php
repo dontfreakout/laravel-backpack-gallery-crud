@@ -2,11 +2,11 @@
 
 namespace SeanDowney\BackpackGalleryCrud\app\Models;
 
-use Storage;
-use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Model;
+use Storage;
 
 class Gallery extends Model
 {
@@ -115,12 +115,12 @@ class Gallery extends Model
                 }
 
                 $image_items[$file] = [
-                    'image' => $file,
+                    'image'      => $file,
                     'image_path' => $this->images[$file]['image_path'],
-                    'live' => isset($this->images[$file]) ? $this->images[$file]['live'] : 0,
-                    'width' => $this->images[$file]['width'],
-                    'height' => $this->images[$file]['height'],
-                    'caption' => isset($this->captions[$file]) ? $this->captions[$file] : '',
+                    'live'       => isset($this->images[$file]) ? $this->images[$file]['live'] : -1,
+                    'width'      => $this->images[$file]['width'],
+                    'height'     => $this->images[$file]['height'],
+                    'caption'    => isset($this->captions[$file]) ? $this->captions[$file] : '',
                 ];
             }
         }
@@ -130,12 +130,12 @@ class Gallery extends Model
             $file_path = $this->slug.'/'.$file;
             $size_data = getimagesize(storage_path('app/'.$disk.'/'.$file_path));
             $image_items[$file] = [
-                'image' => $file,
+                'image'      => $file,
                 'image_path' => $file_path,
-                'live' => isset($this->images[$file]) ? $this->images[$file]['live'] : 0,
-                'width' => $size_data[0],
-                'height' => $size_data[1],
-                'caption' => isset($this->captions[$file]) ? $this->captions[$file] : '',
+                'live'       => isset($this->images[$file]) ? $this->images[$file]['live'] : '',
+                'width'      => $size_data[0],
+                'height'     => $size_data[1],
+                'caption'    => isset($this->captions[$file]) ? $this->captions[$file] : '',
             ];
         }
 
