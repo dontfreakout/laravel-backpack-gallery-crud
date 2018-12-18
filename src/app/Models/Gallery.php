@@ -127,21 +127,6 @@ class Gallery extends Model
             }
         }
 
-        // add any new files to the end of the list
-        foreach ($files as $file) {
-            $file_path = $this->slug.'/'.$file;
-            $size_data = getimagesize(storage_path('app/'.$disk.'/'.$file_path));
-            $image_items[$file] = [
-                'image'      => $file,
-                'image_path' => $file_path,
-                'live'       => isset($this->images[$file]) ? $this->images[$file]['live'] : '',
-                'width'      => $size_data[0],
-                'height'     => $size_data[1],
-                'caption'    => isset($this->captions[$file]) ? $this->captions[$file] : '',
-                'highlight'  => isset($this->highlights[$file]) ? $this->highlights[$file] : '',
-            ];
-        }
-
         return $image_items;
     }
 
