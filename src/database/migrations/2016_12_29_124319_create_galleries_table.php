@@ -20,6 +20,7 @@ class CreateGalleriesTable extends Migration
             $table->text('body');
             $table->text('images')->nullable();
             $table->text('captions')->nullable();
+            $table->text('highlights')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
 

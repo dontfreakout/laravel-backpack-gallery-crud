@@ -24,11 +24,12 @@ class Gallery extends Model
     public $timestamps = true;
     protected $guarded = ['id'];
     protected $fillable = [
-        'title', 'slug', 'body', 'images', 'captions', 'status',
+        'title', 'slug', 'body', 'images', 'captions', 'highlights', 'status',
     ];
     protected $casts = [
         'images' => 'array',
         'captions' => 'array',
+        'highlights' => 'array',
     ];
 
 
@@ -121,6 +122,7 @@ class Gallery extends Model
                     'width'      => $this->images[$file]['width'],
                     'height'     => $this->images[$file]['height'],
                     'caption'    => isset($this->captions[$file]) ? $this->captions[$file] : '',
+                    'highlight'    => isset($this->highlights[$file]) ? $this->highlights[$file] : '',
                 ];
             }
         }
@@ -136,6 +138,7 @@ class Gallery extends Model
                 'width'      => $size_data[0],
                 'height'     => $size_data[1],
                 'caption'    => isset($this->captions[$file]) ? $this->captions[$file] : '',
+                'highlight'  => isset($this->highlights[$file]) ? $this->highlights[$file] : '',
             ];
         }
 

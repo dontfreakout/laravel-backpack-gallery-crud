@@ -39,11 +39,15 @@ if (is_string($items)) {
                 <th style="font-weight: 600!important;">
                     Include Pic
                 </th>
+                <th style="font-weight: 600!important;">
+                    Highlight Pic
+                </th>
                 <th class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-sort"></i> --}} </th>
             </tr>
             </thead>
 
             <tbody id="sortable" class="table-striped">
+
 
             @foreach($items as $key => $item)
                 <tr class="array-row ui-state-default">
@@ -54,13 +58,19 @@ if (is_string($items)) {
                         </a>
                     </td>
 
-                    <td class="col-xs-8">
+                    <td class="col-xs-6">
                         <input class="form-control input-sm" type="text" name="captions[{{ $item['image'] }}]" value="{{ isset($item['caption']) ? $item['caption'] : '' }}">
                     </td>
                     <td class="col-xs-2">
                         <label for="images[{{ $item['image'] }}]">
                             <input type="checkbox" name="images[{{ $item['image'] }}]" id="images[{{ $item['image'] }}]"
                                    value="1" @if($item['live'] !== 0)checked="checked" @endif/> Include
+                        </label>
+                    </td>
+                    <td class="col-xs-2">
+                        <label for="highlights[{{ $item['image'] }}]">
+                            <input type="checkbox" name="highlights[{{ $item['image'] }}]" id="highlights[{{ $item['image'] }}]"
+                                   value="1" @if($item['highlight'] == 1)checked="checked" @endif/> Highlight
                         </label>
                     </td>
                     <td>
