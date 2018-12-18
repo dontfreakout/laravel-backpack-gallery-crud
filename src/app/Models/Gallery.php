@@ -96,6 +96,31 @@ class Gallery extends Model
         return $this->title;
     }
 
+    public function getLiveImagesAttribute()
+    {
+        $image_items = [];
+        if (isset($this->images) && !empty($this->images)) {
+            foreach ($this->images as $file => $value) {
+
+                if (isset($this->images[$file]) && $this->images[$file]['live'] != 1) {
+                    continue;
+                }
+
+                $image_items[$file] = [
+                    'image'      => $file,
+                    'image_path' => $this->images[$file]['image_path'],
+                    'live'       => isset($this->images[$file]) ? $this->images[$file]['live'] : -1,
+                    'width'      => $this->images[$file]['width'],
+                    'height'     => $this->images[$file]['height'],
+                    'caption'    => isset($this->captions[$file]) ? $this->captions[$file] : '',
+                    'highlight'    => isset($this->highlights[$file]) ? $this->highlights[$file] : '',
+                ];
+            }
+        }
+
+        return $image_items;
+    }
+
 
     public function getImageItemsAttribute()
     {
@@ -125,6 +150,21 @@ class Gallery extends Model
                     'highlight'    => isset($this->highlights[$file]) ? $this->highlights[$file] : '',
                 ];
             }
+        }
+
+        // add any new files to the end of the list
+        foreach ($files as $file) {
+            $file_path = $this->slug.'/'.$file;
+            $size_data = getimagesize(storage_path('app/'.$disk.'/'.$file_path));
+            $image_items[$file] = [
+                'image'      => $file,
+                'image_path' => $file_path,
+                'live'       => isset($this->images[$file]) ? $this->images[$file]['live'] : '',
+                'width'      => $size_data[0],
+                'height'     => $size_data[1],
+                'caption'    => isset($this->captions[$file]) ? $this->captions[$file] : '',
+                'highlight'  => isset($this->highlights[$file]) ? $this->highlights[$file] : '',
+            ];
         }
 
         return $image_items;
